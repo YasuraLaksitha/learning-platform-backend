@@ -2,5 +2,7 @@ package edu.opl.backend.service;
 
 import edu.opl.backend.dto.Course;
 
-public interface CourseService extends CommonService<Course, Integer> {
+import java.util.UUID;
+
+public non-sealed interface CourseService extends CommonService<Course, UUID> {
 }
