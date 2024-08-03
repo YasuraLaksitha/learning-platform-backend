@@ -1,9 +1,6 @@
 package edu.opl.backend.entity;
 
-import edu.opl.backend.dto.Course;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,6 +14,11 @@ public class StudentEntity extends PersonEntity {
     private LocalDate dob;
     private String gender;
 
-    @OneToMany(mappedBy = "studentEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(
+            name = "student_course",
+            joinColumns = @JoinColumn(name = "course_id",foreignKey = @ForeignKey(name = "FK_student_course")),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
     private Set<CourseEntity> courseEntitySet;
 }

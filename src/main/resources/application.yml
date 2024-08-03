@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/online_learning_platform_db?CreateDataBaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/online_learning_platform_db?createDataBaseIfNotExist=true
     password: 1234
     username: root
   jpa:
