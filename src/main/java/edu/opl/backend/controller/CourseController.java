@@ -3,6 +3,8 @@ package edu.opl.backend.controller;
 import edu.opl.backend.dto.Course;
 import edu.opl.backend.service.CourseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,27 +19,28 @@ public class CourseController {
     private final CourseService courseService;
 
     @PostMapping("/register")
-    void saveCourse(@RequestBody Course course) {
-        courseService.create(course);
+    ResponseEntity<Course> persist(@RequestBody Course course) {
+        return ResponseEntity.status(201).body(courseService.create(course));
     }
 
     @GetMapping("/byId/{id}")
-    Course getCourseById(@PathVariable UUID id) {
+    Course findById(@PathVariable UUID id) {
         return courseService.findById(id);
     }
 
     @GetMapping("/courses")
-    List<Course> getAllCourses() {
+    List<Course> findAll() {
         return courseService.findAll();
     }
 
     @PutMapping("/update")
-    void updateCourse(@RequestBody Course course) {
-        courseService.update(course);
+    ResponseEntity<Course> update(@RequestBody Course course) {
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.update(course));
     }
 
     @DeleteMapping("/delete")
-    void deleteCourse(@RequestBody Course course) {
+    HttpStatus delete(@RequestBody Course course) {
         courseService.delete(course);
+        return HttpStatus.OK;
     }
 }
