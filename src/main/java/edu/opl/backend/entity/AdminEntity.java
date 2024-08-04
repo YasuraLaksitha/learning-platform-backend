@@ -1,7 +1,9 @@
 package edu.opl.backend.entity;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 @Entity
-public class AdminEntity extends PersonEntity {
+@Table(name = "admin")
+@AttributeOverride(name = "id",column = @Column(name = "admin_id"))
+public non-sealed class AdminEntity extends PersonEntity {
 }

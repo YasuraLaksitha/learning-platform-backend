@@ -1,5 +1,6 @@
 package edu.opl.backend.dto;
 
+import edu.opl.backend.util.Gender;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -8,8 +9,9 @@ import java.util.Set;
 
 @EqualsAndHashCode(callSuper=true)
 @Data
-public class Student extends Person{
+public non-sealed class Student extends Person {
     private LocalDate dob;
-    private String gender;
+    private Gender gender;
     private Set<Course> courseSet;
+    private Set<Assignment> assignmentSet;
 }

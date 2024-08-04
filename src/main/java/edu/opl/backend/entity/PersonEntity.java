@@ -7,9 +7,11 @@ import java.util.UUID;
 
 @MappedSuperclass
 @Data
-abstract class PersonEntity {
+abstract sealed class PersonEntity
+    permits AdminEntity,InstructorEntity,StudentEntity
+{
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String firstName;
     private String lastName;

@@ -1,4 +1,7 @@
 package edu.opl.backend.dto;
 
-public class Admin extends Person{
+import lombok.ToString;
+
+@ToString
+public non-sealed class Admin extends Person {
 }
