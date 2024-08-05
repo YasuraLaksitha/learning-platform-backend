@@ -1,15 +1,23 @@
 package edu.opl.backend.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.opl.backend.config.PersonValidator;
 import edu.opl.backend.dto.Student;
 import edu.opl.backend.entity.StudentEntity;
+import edu.opl.backend.exception.EmptyValuePassedException;
+import edu.opl.backend.exception.EntityExistenceException;
+import edu.opl.backend.exception.EntityNotFoundException;
 import edu.opl.backend.repository.StudentRepository;
 import edu.opl.backend.service.StudentService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -20,16 +28,22 @@ public class StudentServiceImpl implements StudentService {
 
     private final ObjectMapper mapper;
 
+    private final PersonValidator personValidator;
 
     @Override
     public Student create(final Student student) {
+        personValidator.isValidPerson(student,true);
         StudentEntity studentEntity = repository.save(mapper.convertValue(student, StudentEntity.class));
         return mapper.convertValue(studentEntity, Student.class);
     }
 
     @Override
-    public Student findById(UUID value) {
-        StudentEntity studentEntity = repository.findById(value).orElse(null);
+    public Student findById(final UUID value) {
+        if (!StringUtils.hasText(value.toString()))
+            throw new EmptyValuePassedException("Student id is not provided");
+        Optional<StudentEntity> studentEntity = repository.findById(value);
+        if (studentEntity.isEmpty())
+            throw new EntityNotFoundException(String.format("Student with id %s not found", value));
         return mapper.convertValue(studentEntity, Student.class);
     }
 
@@ -44,12 +58,20 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void update(final Student student) {
-        this.create(student);
+    public Student update(final Student student) {
+        personValidator.isValidPerson(student,false);
+        if (!repository.existsById(student.getId()))
+            throw new EntityNotFoundException(String.format("Student with id %s not found", student.getId()));
+        return mapper.convertValue(repository
+                .save(mapper.convertValue(student, StudentEntity.class)), Student.class);
     }
 
     @Override
     public void delete(final Student student) {
-        repository.delete(mapper.convertValue(student, StudentEntity.class));
+        if (repository.existsById(student.getId())) {
+            repository.delete(mapper.convertValue(student, StudentEntity.class));
+            return;
+        }
+        throw new EntityNotFoundException(String.format("Student with id %s doesn't exist", student.getId()));
     }
 }
