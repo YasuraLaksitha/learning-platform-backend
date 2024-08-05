@@ -5,17 +5,14 @@ import edu.opl.backend.config.PersonValidator;
 import edu.opl.backend.dto.Student;
 import edu.opl.backend.entity.StudentEntity;
 import edu.opl.backend.exception.EmptyValuePassedException;
-import edu.opl.backend.exception.EntityExistenceException;
 import edu.opl.backend.exception.EntityNotFoundException;
 import edu.opl.backend.repository.StudentRepository;
 import edu.opl.backend.service.StudentService;
-
-import java.util.Collections;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

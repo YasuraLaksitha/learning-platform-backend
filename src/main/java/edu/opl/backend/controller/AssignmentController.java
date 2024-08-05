@@ -3,6 +3,8 @@ package edu.opl.backend.controller;
 import edu.opl.backend.dto.Assignment;
 import edu.opl.backend.service.AssignmentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +19,8 @@ public class AssignmentController {
     private final AssignmentService assignmentService;
 
     @PostMapping("/create")
-    void saveAssignment(@RequestBody Assignment assignment) {
-        assignmentService.create(assignment);
+    ResponseEntity<Assignment> persist(@RequestBody Assignment assignment) {
+        return ResponseEntity.status(201).body(assignmentService.create(assignment));
     }
 
     @GetMapping("/byId/{id}")
@@ -32,12 +34,13 @@ public class AssignmentController {
     }
 
     @PutMapping("/update")
-    void updateAssignment(@RequestBody Assignment assignment) {
-        assignmentService.update(assignment);
+    ResponseEntity<Assignment> updateAssignment(@RequestBody Assignment assignment) {
+        return ResponseEntity.status(HttpStatus.OK).body(assignmentService.update(assignment));
     }
 
     @DeleteMapping("/delete")
-    void deleteAssignment(@RequestBody Assignment assignment) {
+    HttpStatus deleteAssignment(@RequestBody Assignment assignment) {
         assignmentService.delete(assignment);
+        return HttpStatus.OK;
     }
 }

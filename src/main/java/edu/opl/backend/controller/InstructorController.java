@@ -43,4 +43,10 @@ public class InstructorController {
         instructorService.delete(instructor);
         return HttpStatus.OK;
     }
+
+    @PatchMapping("/isActive/{id}/{isActive}")
+    HttpStatus setActive(@PathVariable("id") UUID id ,@PathVariable("isActive") boolean isActive) {
+        instructorService.setActive(id,isActive);
+        return HttpStatus.OK;
+    }
 }

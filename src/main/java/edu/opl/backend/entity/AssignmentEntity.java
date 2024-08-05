@@ -1,7 +1,5 @@
 package edu.opl.backend.entity;
 
-import edu.opl.backend.dto.Course;
-import edu.opl.backend.dto.Student;
 import edu.opl.backend.util.SubmitionStatus;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -15,6 +13,7 @@ import java.util.UUID;
 public class AssignmentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "assignment_id")
     private UUID  id;
     private String title;
     private String description;
@@ -23,10 +22,10 @@ public class AssignmentEntity {
     private SubmitionStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
+    @JoinColumn(name = "student_id",foreignKey = @ForeignKey(name = "FKStudentId"))
     private StudentEntity studentEntity;
 
     @ManyToOne
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "course_id",foreignKey = @ForeignKey(name = "FKCourseId"))
     private CourseEntity courseEntity;
 }
