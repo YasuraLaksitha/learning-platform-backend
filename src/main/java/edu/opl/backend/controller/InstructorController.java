@@ -34,7 +34,7 @@ public class InstructorController {
     }
 
     @PutMapping("/update")
-    ResponseEntity<Instructor> update(@RequestBody Instructor instructor) {
+    ResponseEntity<Instructor> replace(@RequestBody Instructor instructor) {
         return ResponseEntity.status(HttpStatus.OK).body(instructorService.update(instructor));
     }
 

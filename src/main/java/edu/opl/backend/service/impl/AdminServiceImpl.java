@@ -34,6 +34,7 @@ public class AdminServiceImpl implements AdminService {
     public static final String NOT_FOUND = "Instructor with id %s not found";
 
     public static final String COURSE_NOT_FOUND = "Course with id %s not found";
+
     public static final String ADMIN_NOT_FOUND = "Admin with id %s not found";
 
     private final AdminRepository repository;
@@ -51,6 +52,8 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Admin create(Admin admin) {
         personValidator.isValidPerson(admin,true);
+        if (Boolean.TRUE.equals(repository.existsByEmail(admin.getEmail())))
+            throw new EntityExistsException("Admin already exists");
         final AdminEntity adminEntity = repository.save(mapper.convertValue(admin, AdminEntity.class));
         return mapper.convertValue(adminEntity, Admin.class);
     }

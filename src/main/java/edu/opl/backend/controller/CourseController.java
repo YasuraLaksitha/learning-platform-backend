@@ -34,7 +34,7 @@ public class CourseController {
     }
 
     @PutMapping("/update")
-    ResponseEntity<Course> update(@RequestBody Course course) {
+    ResponseEntity<Course> replace(@RequestBody Course course) {
         return ResponseEntity.status(HttpStatus.OK).body(courseService.update(course));
     }
 

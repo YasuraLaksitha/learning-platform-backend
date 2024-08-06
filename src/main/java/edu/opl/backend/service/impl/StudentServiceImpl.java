@@ -8,7 +8,12 @@ import edu.opl.backend.exception.EmptyValuePassedException;
 import edu.opl.backend.exception.EntityNotFoundException;
 import edu.opl.backend.repository.StudentRepository;
 import edu.opl.backend.service.StudentService;
+import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -19,7 +24,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class StudentServiceImpl implements StudentService {
+public class StudentServiceImpl implements StudentService{
 
     private final StudentRepository repository;
 
@@ -27,9 +32,13 @@ public class StudentServiceImpl implements StudentService {
 
     private final PersonValidator personValidator;
 
+    private final BCryptPasswordEncoder encoder;
+
     @Override
     public Student create(final Student student) {
-        personValidator.isValidPerson(student,true);
+        personValidator.isValidPerson(student, true);
+        if (Boolean.TRUE.equals(repository.existsByEmail(student.getEmail())))
+            throw new EntityExistsException("Student already exists");
         StudentEntity studentEntity = repository.save(mapper.convertValue(student, StudentEntity.class));
         return mapper.convertValue(studentEntity, Student.class);
     }
@@ -56,7 +65,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student update(final Student student) {
-        personValidator.isValidPerson(student,false);
+        personValidator.isValidPerson(student, false);
         if (!repository.existsById(student.getId()))
             throw new EntityNotFoundException(String.format("Student with id %s not found", student.getId()));
         return mapper.convertValue(repository
@@ -70,5 +79,14 @@ public class StudentServiceImpl implements StudentService {
             return;
         }
         throw new EntityNotFoundException(String.format("Student with id %s doesn't exist", student.getId()));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        final Student student = mapper.convertValue(repository.findByUsername(username), Student.class);
+        if (student == null)
+            throw new EntityNotFoundException(String.format("Student with name %s not found", username));
+        return User.builder()
+                .username(username).password(encoder.encode(student.getPassword())).roles("USER").build();
     }
 }

@@ -19,28 +19,28 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping("/register")
-    ResponseEntity<Student> saveStudent(@RequestBody Student student) {
+    ResponseEntity<Student> persist(@RequestBody Student student) {
         final Student savedStudent = studentService.create(student);
         return ResponseEntity.status(201).body(savedStudent);
     }
 
     @GetMapping("/byId/{id}")
-    Student getStudentById(@PathVariable("id") UUID id) {
+    Student findById(@PathVariable("id") UUID id) {
         return studentService.findById(id);
     }
 
     @GetMapping("/students")
-    List<Student> getAllStudents() {
+    List<Student> findAll() {
         return studentService.findAll();
     }
 
     @PutMapping("/update")
-    ResponseEntity<Student> updateStudent(@RequestBody Student student) {
+    ResponseEntity<Student> update(@RequestBody Student student) {
         return ResponseEntity.status(HttpStatus.OK).body( studentService.update(student));
     }
 
     @DeleteMapping("/delete")
-    HttpStatus deleteStudent(@RequestBody Student student) {
+    HttpStatus remove(@RequestBody Student student) {
         studentService.delete(student);
         return HttpStatus.OK;
     }

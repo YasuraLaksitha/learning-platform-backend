@@ -9,16 +9,23 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "assignemnt")
+@Table(name = "assignment")
 public class AssignmentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "assignment_id")
     private UUID  id;
+
+    @Column(nullable = false,unique = true)
     private String title;
+
+    @Column(nullable = false)
     private String description;
+
     private LocalDate allocatedDate;
+
     private LocalDate dueDate;
+
     private SubmitionStatus status;
 
     @ManyToOne

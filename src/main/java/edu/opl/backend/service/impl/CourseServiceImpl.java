@@ -33,7 +33,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course create(Course course) {
         courseValidator.isValidCourse(course,true);
-        if (repository.existsById(course.getId()))
+        if (Boolean.TRUE.equals(repository.existsByTitle(course.getTitle())))
             throw new EntityExistsException("Entity already exists");
         CourseEntity courseEntity = repository.save(mapper.convertValue(course, CourseEntity.class));
         return mapper.convertValue(courseEntity, Course.class);

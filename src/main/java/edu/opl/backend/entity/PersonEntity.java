@@ -13,11 +13,19 @@ abstract sealed class PersonEntity
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String firstName;
-    private String lastName;
+
+    private String fullName;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(unique = true, nullable = false)
     private String username;
+
+    @Column(unique = true, nullable = false)
     private String password;
+
     private String role;
-    private boolean status;
+
+    private boolean isAvailable;
 }

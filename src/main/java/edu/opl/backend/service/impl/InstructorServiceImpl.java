@@ -8,6 +8,7 @@ import edu.opl.backend.exception.EmptyValuePassedException;
 import edu.opl.backend.exception.EntityNotFoundException;
 import edu.opl.backend.repository.InstructorRepository;
 import edu.opl.backend.service.InstructorService;
+import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -21,6 +22,7 @@ import java.util.UUID;
 public class InstructorServiceImpl implements InstructorService {
 
     public static final String NOT_FOUND = "Instructor with ID %s not found";
+
     private final InstructorRepository repository;
 
     private final ObjectMapper mapper;
@@ -30,6 +32,8 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public Instructor create(Instructor instructor) {
         personValidator.isValidPerson(instructor,true);
+        if (Boolean.TRUE.equals(repository.findByEmail(instructor.getEmail())))
+            throw new EntityExistsException("Instructor already exists");
         final InstructorEntity instructorEntity = repository.save(mapper.convertValue(instructor, InstructorEntity.class));
         return mapper.convertValue(instructorEntity, Instructor.class);
     }

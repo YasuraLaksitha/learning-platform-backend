@@ -15,9 +15,15 @@ public class CourseEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "course_id")
     private UUID id;
+
+    @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false)
     private String description;
+
     private State status;
+
     private String rejectedReason;
 
     @ManyToOne

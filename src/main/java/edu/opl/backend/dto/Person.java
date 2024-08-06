@@ -1,11 +1,13 @@
 package edu.opl.backend.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @ToString
 public abstract sealed class Person
         permits Admin, Instructor, Student
@@ -16,5 +18,5 @@ public abstract sealed class Person
     private String username;
     private String password;
     private String role;
-    private boolean available;
+    private boolean isAvailable;
 }

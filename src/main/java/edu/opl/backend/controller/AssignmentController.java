@@ -24,22 +24,22 @@ public class AssignmentController {
     }
 
     @GetMapping("/byId/{id}")
-    Assignment getAssignmentById(@PathVariable UUID id) {
+    Assignment findById(@PathVariable UUID id) {
         return assignmentService.findById(id);
     }
 
     @GetMapping("/assignments")
-    List<Assignment> getAllAssignments() {
+    List<Assignment> findAll() {
         return assignmentService.findAll();
     }
 
     @PutMapping("/update")
-    ResponseEntity<Assignment> updateAssignment(@RequestBody Assignment assignment) {
+    ResponseEntity<Assignment> replace(@RequestBody Assignment assignment) {
         return ResponseEntity.status(HttpStatus.OK).body(assignmentService.update(assignment));
     }
 
     @DeleteMapping("/delete")
-    HttpStatus deleteAssignment(@RequestBody Assignment assignment) {
+    HttpStatus remove(@RequestBody Assignment assignment) {
         assignmentService.delete(assignment);
         return HttpStatus.OK;
     }

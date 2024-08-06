@@ -6,8 +6,9 @@ import edu.opl.backend.dto.Assignment;
 import edu.opl.backend.entity.AssignmentEntity;
 import edu.opl.backend.exception.EmptyValuePassedException;
 import edu.opl.backend.exception.EntityNotFoundException;
-import edu.opl.backend.repository.AssignmentRepostitory;
+import edu.opl.backend.repository.AssignmentRepository;
 import edu.opl.backend.service.AssignmentService;
+import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     public static final String NOT_FOUND = "Assignment with id %s not found";
 
-    private final AssignmentRepostitory assignmentRepostitory;
+    private final AssignmentRepository assignmentRepository;
 
     private final ObjectMapper mapper;
 
@@ -33,7 +34,11 @@ public class AssignmentServiceImpl implements AssignmentService {
     @Override
     public Assignment create(Assignment assignment) {
         assignmentValidator.isValidAssignment(assignment, true);
-        final AssignmentEntity entity = assignmentRepostitory.save(mapper.convertValue(assignment, AssignmentEntity.class));
+        if (Boolean.TRUE.equals(assignmentRepository
+                .existsByTitleAndAllocatedDate(assignment.getTitle(),assignment.getAllocatedDate())))
+            throw new EntityExistsException("Assignment already exists");
+        final AssignmentEntity entity = assignmentRepository
+                .save(mapper.convertValue(assignment, AssignmentEntity.class));
         return mapper.convertValue(entity, Assignment.class);
     }
 
@@ -41,7 +46,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     public Assignment findById(UUID uuid) {
         if (!StringUtils.hasText(uuid.toString()))
             throw new EmptyValuePassedException("ID is not provided");
-        final Optional<AssignmentEntity> entity = assignmentRepostitory.findById(uuid);
+        final Optional<AssignmentEntity> entity = assignmentRepository.findById(uuid);
         if (entity.isEmpty())
             throw new EntityNotFoundException(String.format(NOT_FOUND, uuid));
         return mapper.convertValue(entity, Assignment.class);
@@ -49,24 +54,24 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     @Override
     public List<Assignment> findAll() {
-        return assignmentRepostitory.findAll().stream()
+        return assignmentRepository.findAll().stream()
                 .map(assignmentEntity -> mapper.convertValue(assignmentEntity, Assignment.class)).toList();
     }
 
     @Override
     public Assignment update(Assignment assignment) {
         assignmentValidator.isValidAssignment(assignment, false);
-        if (!assignmentRepostitory.existsById(assignment.getId()))
+        if (!assignmentRepository.existsById(assignment.getId()))
             throw new EntityNotFoundException(String.format(NOT_FOUND, assignment.getId()));
-        return mapper.convertValue(assignmentRepostitory
+        return mapper.convertValue(assignmentRepository
                 .save(mapper.convertValue(assignment, AssignmentEntity.class)), Assignment.class);
     }
 
     @Override
     public void delete(Assignment assignment) {
         assignmentValidator.isValidAssignment(assignment, false);
-        if (!assignmentRepostitory.existsById(assignment.getId()))
+        if (!assignmentRepository.existsById(assignment.getId()))
             throw new EntityNotFoundException(String.format(NOT_FOUND, assignment.getId()));
-        assignmentRepostitory.delete(mapper.convertValue(assignment, AssignmentEntity.class));
+        assignmentRepository.delete(mapper.convertValue(assignment, AssignmentEntity.class));
     }
 }

@@ -17,6 +17,7 @@ public non-sealed class StudentEntity extends PersonEntity {
     private LocalDate dob;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false,updatable = false)
     private Gender gender;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})

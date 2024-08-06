@@ -28,17 +28,17 @@ public class AdminController {
     }
 
     @GetMapping("/admins")
-    List<Admin> retrieveAll() {
+    List<Admin> findAll() {
         return adminService.findAll();
     }
 
     @GetMapping("/byId/{id}")
-    Admin retrieveById(@PathVariable UUID id) {
+    Admin findById(@PathVariable UUID id) {
         return adminService.findById(id);
     }
 
     @PutMapping("/update")
-    ResponseEntity<Admin> updateAdmin(@RequestBody Admin admin) {
+    ResponseEntity<Admin> replace(@RequestBody Admin admin) {
         final Admin updated = adminService.update(admin);
         return ResponseEntity.status(HttpStatus.OK).body(updated);
     }
