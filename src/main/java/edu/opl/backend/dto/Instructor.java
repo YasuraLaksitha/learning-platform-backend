@@ -14,5 +14,6 @@ public non-sealed class Instructor extends Person {
     private Set<Course> courseSet;
     private String experience;
     private State status;
+    private Role role;
     private boolean isActive;
 }

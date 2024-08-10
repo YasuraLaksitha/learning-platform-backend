@@ -29,4 +29,8 @@ public non-sealed class InstructorEntity extends PersonEntity {
 
     @OneToMany(mappedBy = "instructorEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CourseEntity> courseEntitySet;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "role_type", nullable = false)
+    private RoleEntity roleEntity;
 }

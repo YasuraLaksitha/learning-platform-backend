@@ -12,6 +12,7 @@ public class Course {
     private String title;
     private String description;
     private State status;
+    private Role role;
     private String rejectedReason;
     private Instructor instructor;
     private Set<Student> studentSet;

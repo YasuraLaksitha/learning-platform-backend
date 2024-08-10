@@ -1,4 +1,11 @@
 spring:
+  application:
+    name: online-learning-platform
+
+  devtools:
+    restart:
+      additional-paths: src/main/java,src/main/resources
+
   datasource:
     url: jdbc:mysql://localhost:3306/online_learning_platform_db?createDataBaseIfNotExist=true
     password: 1234
@@ -10,5 +17,8 @@ spring:
     show-sql: true
 
   security:
-    user:
-      password: Yasu2237451
+    oauth2:
+      resourceserver:
+        jwt:
+          secret: 9f6d35e2e8f248a5b4c0de87c3a0d1e7d4c9f0a2e3d8b7f6c3a9b4e0f5c2d1a6e
+          issuer-uri:

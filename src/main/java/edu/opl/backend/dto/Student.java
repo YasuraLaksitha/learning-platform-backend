@@ -12,6 +12,7 @@ import java.util.Set;
 public non-sealed class Student extends Person {
     private LocalDate dob;
     private Gender gender;
+    private Role role;
     private Set<Course> courseSet;
     private Set<Assignment> assignmentSet;
 }

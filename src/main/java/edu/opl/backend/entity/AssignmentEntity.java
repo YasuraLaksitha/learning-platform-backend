@@ -35,4 +35,8 @@ public class AssignmentEntity {
     @ManyToOne
     @JoinColumn(name = "course_id",foreignKey = @ForeignKey(name = "FKCourseId"))
     private CourseEntity courseEntity;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "role_type", nullable = false)
+    private RoleEntity roleEntity;
 }

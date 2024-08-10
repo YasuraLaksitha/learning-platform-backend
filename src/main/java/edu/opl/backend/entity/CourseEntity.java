@@ -39,4 +39,8 @@ public class CourseEntity {
 
     @OneToMany(mappedBy = "courseEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<AssignmentEntity> assignmentEntitySet;
+
+    @ManyToOne
+    @JoinColumn(name = "role_type", nullable = false)
+    private RoleEntity roleEntity;
 }

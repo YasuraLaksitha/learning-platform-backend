@@ -17,4 +17,5 @@ public class Assignment {
     private SubmitionStatus status;
     private Student student;
     private Course course;
+    private Role role;
 }

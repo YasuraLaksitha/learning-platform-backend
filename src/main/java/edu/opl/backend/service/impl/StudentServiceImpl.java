@@ -10,10 +10,6 @@ import edu.opl.backend.repository.StudentRepository;
 import edu.opl.backend.service.StudentService;
 import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -32,7 +28,6 @@ public class StudentServiceImpl implements StudentService{
 
     private final PersonValidator personValidator;
 
-    private final BCryptPasswordEncoder encoder;
 
     @Override
     public Student create(final Student student) {
@@ -81,12 +76,5 @@ public class StudentServiceImpl implements StudentService{
         throw new EntityNotFoundException(String.format("Student with id %s doesn't exist", student.getId()));
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        final Student student = mapper.convertValue(repository.findByUsername(username), Student.class);
-        if (student == null)
-            throw new EntityNotFoundException(String.format("Student with name %s not found", username));
-        return User.builder()
-                .username(username).password(encoder.encode(student.getPassword())).roles("USER").build();
-    }
+
 }
