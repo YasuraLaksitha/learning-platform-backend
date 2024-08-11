@@ -23,6 +23,7 @@ public class AuthController {
             case Admin admin -> ResponseEntity.ok(admin);
             case Student student -> ResponseEntity.ok(student);
             case Instructor instructor -> ResponseEntity.ok(instructor);
+            case Manager manager -> ResponseEntity.ok(manager);
             case null -> ResponseEntity.notFound().build();
         };
     }

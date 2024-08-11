@@ -10,7 +10,7 @@ import java.util.UUID;
 @Setter
 @ToString
 public abstract sealed class Person
-        permits Admin, Instructor, Student
+        permits Admin, Instructor, Manager, Student
 {
     private UUID id;
     private String fullName;

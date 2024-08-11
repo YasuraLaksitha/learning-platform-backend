@@ -7,8 +7,8 @@ import java.util.UUID;
 
 @MappedSuperclass
 @Data
-abstract sealed class PersonEntity
-    permits AdminEntity,InstructorEntity,StudentEntity
+public abstract sealed class PersonEntity
+        permits ManagerEntity, AdminEntity, InstructorEntity, StudentEntity
 {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

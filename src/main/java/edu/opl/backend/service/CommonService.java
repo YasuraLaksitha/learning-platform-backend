@@ -3,7 +3,7 @@ package edu.opl.backend.service;
 import java.util.List;
 
 public sealed interface CommonService<T, V>
-        permits AdminService, AssignmentService, CourseService, InstructorService, StudentService {
+        permits AdminService, AssignmentService, CourseService, InstructorService, StudentService, RoleService {
     T create(T t);
 
     T findById(final V v);
