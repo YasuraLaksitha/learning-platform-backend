@@ -5,8 +5,6 @@ import edu.opl.backend.exception.EmptyValuePassedException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.util.UUID;
-
 @Component
 public class CourseValidator {
 
@@ -21,7 +19,7 @@ public class CourseValidator {
             throw new EmptyValuePassedException("Course description is empty");
     }
 
-    private void checkId(UUID id) {
+    private void checkId(Long id) {
         if (!StringUtils.hasText(id.toString()))
             throw new EmptyValuePassedException("Course id is empty");
     }

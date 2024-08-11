@@ -25,7 +25,7 @@ public class RoleController {
 
     @GetMapping("/byType")
     Role findByType(@RequestParam Role role) {
-        return roleService.retriveByRoleType(role.getRoleType());
+        return roleService.retrieveByRoleType(role.getRoleType());
     }
 
     @GetMapping("/roles")

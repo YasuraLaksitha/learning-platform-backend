@@ -5,11 +5,10 @@ import edu.opl.backend.util.SubmitionStatus;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Data
 public class Assignment {
-    private UUID  id;
+    private Long id;
     private String title;
     private String description;
     private LocalDate allocatedDate;

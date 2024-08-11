@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,7 +32,7 @@ public class AdminController {
     }
 
     @GetMapping("/byId/{id}")
-    Admin findById(@PathVariable UUID id) {
+    Admin findById(@PathVariable Long id) {
         return adminService.findById(id);
     }
 

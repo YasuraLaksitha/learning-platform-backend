@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,7 +23,7 @@ public class CourseController {
     }
 
     @GetMapping("/byId/{id}")
-    Course findById(@PathVariable UUID id) {
+    Course findById(@PathVariable Long id) {
         return courseService.findById(id);
     }
 

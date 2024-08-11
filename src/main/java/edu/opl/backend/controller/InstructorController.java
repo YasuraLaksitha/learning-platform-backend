@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/instructor")
@@ -24,7 +23,7 @@ public class InstructorController {
     }
 
     @GetMapping("/byId/{id}")
-    Instructor findById(@PathVariable("id") UUID id) {
+    Instructor findById(@PathVariable("id") Long id) {
         return instructorService.findById(id);
     }
 
@@ -45,7 +44,7 @@ public class InstructorController {
     }
 
     @PatchMapping("/isActive/{id}/{isActive}")
-    HttpStatus setActive(@PathVariable("id") UUID id ,@PathVariable("isActive") boolean isActive) {
+    HttpStatus setActive(@PathVariable("id") Long id, @PathVariable("isActive") boolean isActive) {
         instructorService.setActive(id,isActive);
         return HttpStatus.OK;
     }

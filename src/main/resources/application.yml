@@ -7,13 +7,13 @@ spring:
       additional-paths: src/main/java,src/main/resources
 
   datasource:
-    url: jdbc:mysql://localhost:3306/online_learning_platform_db?createDataBaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/online_learning_platform_db?createDatabaseIfNotExist=true
     password: 1234
     username: root
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: true
 
   security:

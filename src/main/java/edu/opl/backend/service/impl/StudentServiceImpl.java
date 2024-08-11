@@ -16,7 +16,6 @@ import org.springframework.util.StringUtils;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +38,7 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public Student findById(final UUID value) {
+    public Student findById(final Long value) {
         if (!StringUtils.hasText(value.toString()))
             throw new EmptyValuePassedException("Student id is not provided");
         Optional<StudentEntity> studentEntity = repository.findById(value);

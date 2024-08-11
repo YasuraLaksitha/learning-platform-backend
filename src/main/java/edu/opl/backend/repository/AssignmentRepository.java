@@ -4,8 +4,7 @@ import edu.opl.backend.entity.AssignmentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
-public interface AssignmentRepository extends JpaRepository<AssignmentEntity, UUID> {
+public interface AssignmentRepository extends JpaRepository<AssignmentEntity, Long> {
     Boolean existsByTitleAndAllocatedDate(String title, LocalDate allocatedDate);
 }

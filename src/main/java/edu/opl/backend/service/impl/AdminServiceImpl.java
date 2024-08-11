@@ -24,7 +24,6 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -59,12 +58,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Admin findById(final UUID uuid) {
-        if (!StringUtils.hasText(uuid.toString()))
+    public Admin findById(final Long Long) {
+        if (!StringUtils.hasText(Long.toString()))
             throw new EmptyValuePassedException("id not provided");
-        final Optional<AdminEntity> adminEntity = repository.findById(uuid);
+        final Optional<AdminEntity> adminEntity = repository.findById(Long);
         if (!adminEntity.isPresent())
-            throw new EntityNotFoundException(String.format(ADMIN_NOT_FOUND, uuid.toString()));
+            throw new EntityNotFoundException(String.format(ADMIN_NOT_FOUND, Long.toString()));
         return mapper.convertValue(adminEntity.get(), Admin.class);
     }
 

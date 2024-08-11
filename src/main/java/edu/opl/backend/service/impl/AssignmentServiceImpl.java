@@ -16,7 +16,6 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -43,12 +42,12 @@ public class AssignmentServiceImpl implements AssignmentService {
     }
 
     @Override
-    public Assignment findById(UUID uuid) {
-        if (!StringUtils.hasText(uuid.toString()))
+    public Assignment findById(Long Long) {
+        if (!StringUtils.hasText(Long.toString()))
             throw new EmptyValuePassedException("ID is not provided");
-        final Optional<AssignmentEntity> entity = assignmentRepository.findById(uuid);
+        final Optional<AssignmentEntity> entity = assignmentRepository.findById(Long);
         if (entity.isEmpty())
-            throw new EntityNotFoundException(String.format(NOT_FOUND, uuid));
+            throw new EntityNotFoundException(String.format(NOT_FOUND, Long));
         return mapper.convertValue(entity, Assignment.class);
     }
 

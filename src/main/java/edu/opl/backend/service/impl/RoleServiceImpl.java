@@ -15,13 +15,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
 
     public static final String ROLE_IS_NULL = "Role is null";
+
+    public static final String NOT_FOUND = "Role not found";
 
     private final RoleRepository roleRepository;
 
@@ -37,11 +38,11 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role findById(UUID uuid) {
-        Objects.requireNonNull(uuid, () -> {
-            throw new IllegalValuePassedException("UUID is null");
+    public Role findById(Long Long) {
+        Objects.requireNonNull(Long, () -> {
+            throw new IllegalValuePassedException("Long is null");
         });
-        return objectMapper.convertValue(roleRepository.findById(uuid), Role.class);
+        return objectMapper.convertValue(roleRepository.findById(Long), Role.class);
     }
 
     @Override
@@ -59,7 +60,7 @@ public class RoleServiceImpl implements RoleService {
             return objectMapper.convertValue(roleRepository
                     .save(objectMapper.convertValue(role, RoleEntity.class)), Role.class);
         }
-        throw new EntityExistsException("Role not found");
+        throw new EntityExistsException(NOT_FOUND);
     }
 
     @Override
@@ -71,17 +72,17 @@ public class RoleServiceImpl implements RoleService {
             roleRepository.deleteById(role.getRoleId());
             return;
         }
-        throw new EntityExistsException("Role not found");
+        throw new EntityExistsException(NOT_FOUND);
     }
 
     @Override
-    public Role retriveByRoleType(RoleType roleType) {
+    public Role retrieveByRoleType(RoleType roleType) {
         Objects.requireNonNull(roleType, () -> {
             throw new EmptyValuePassedException("RoleType is null");
         });
         final Optional<RoleEntity> roleEntity = roleRepository.findByRoleType(roleType);
         if (roleEntity.isEmpty())
-            throw new EntityExistsException("Role not found");
+            throw new EntityExistsException(NOT_FOUND);
         return objectMapper.convertValue(roleEntity, Role.class);
     }
 }

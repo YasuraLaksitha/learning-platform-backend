@@ -16,7 +16,6 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -40,12 +39,12 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course findById(final UUID uuid) {
-        if (!StringUtils.hasText(uuid.toString()))
+    public Course findById(final Long Long) {
+        if (!StringUtils.hasText(Long.toString()))
             throw new EmptyValuePassedException("ID is not provided");
-        Optional<CourseEntity> entity = repository.findById(uuid);
+        Optional<CourseEntity> entity = repository.findById(Long);
         if (entity.isEmpty())
-            throw new EntityNotFoundException(String.format(NOT_FOUND, uuid));
+            throw new EntityNotFoundException(String.format(NOT_FOUND, Long));
         return mapper.convertValue(entity, Course.class);
     }
 

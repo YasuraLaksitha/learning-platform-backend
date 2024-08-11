@@ -3,16 +3,14 @@ package edu.opl.backend.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.UUID;
-
 @MappedSuperclass
 @Data
 public abstract sealed class PersonEntity
         permits ManagerEntity, AdminEntity, InstructorEntity, StudentEntity
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String fullName;
 

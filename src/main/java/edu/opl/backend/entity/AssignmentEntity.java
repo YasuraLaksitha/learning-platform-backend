@@ -5,16 +5,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Data
 @Entity
 @Table(name = "assignment")
 public class AssignmentEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "assignment_id")
-    private UUID  id;
+    private Long id;
 
     @Column(nullable = false,unique = true)
     private String title;

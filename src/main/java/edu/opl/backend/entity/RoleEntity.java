@@ -5,15 +5,14 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Set;
-import java.util.UUID;
 
 @Data
 @Entity
 @Table(name = "role_type")
 public class RoleEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID roleId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long roleId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 15,unique=true, updatable=false)
