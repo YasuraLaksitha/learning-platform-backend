@@ -6,5 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface InstructorRepository extends JpaRepository<InstructorEntity, UUID> {
-    Boolean findByEmail(String email);
+    Boolean existsByEmail(String email);
+
+    InstructorEntity findByUsername(String username);
 }

@@ -37,4 +37,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .message(ex.getMessage()).status(HttpStatus.BAD_REQUEST).build();
         return ResponseEntity.ok().body(responseBody);
     }
+
+    @ExceptionHandler(value = IncorrectPasswordException.class)
+    ResponseEntity<ErrorResponseBody> handleIncorrectPasswordException(IncorrectPasswordException ex) {
+        final ErrorResponseBody responseBody = ErrorResponseBody.builder()
+                .message(ex.getMessage()).status(HttpStatus.UNAUTHORIZED).build();
+        return ResponseEntity.ok().body(responseBody);
+    }
 }

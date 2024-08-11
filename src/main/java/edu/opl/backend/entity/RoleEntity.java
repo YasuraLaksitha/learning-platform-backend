@@ -1,6 +1,6 @@
 package edu.opl.backend.entity;
 
-import edu.opl.backend.dto.util.RoleType;
+import edu.opl.backend.util.RoleType;
 import jakarta.persistence.*;
 import lombok.Data;
 

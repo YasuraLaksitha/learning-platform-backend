@@ -25,5 +25,8 @@ abstract sealed class PersonEntity
     @Column(unique = true, nullable = false)
     private String password;
 
+    @Transient
+    private RoleEntity role;
+
     private boolean isAvailable;
 }

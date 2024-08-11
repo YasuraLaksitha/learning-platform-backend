@@ -22,7 +22,6 @@ public class PersonValidator {
         isValidPassword(person.getPassword());
     }
 
-
     private void isValidEmail(String email) {
         if (email.isBlank() || email.isEmpty())
             throw new IllegalValuePassedException("Email is not provided");

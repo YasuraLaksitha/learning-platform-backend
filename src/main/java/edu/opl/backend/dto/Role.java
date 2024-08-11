@@ -1,6 +1,6 @@
 package edu.opl.backend.dto;
 
-import edu.opl.backend.dto.util.RoleType;
+import edu.opl.backend.util.RoleType;
 import lombok.Builder;
 import lombok.Data;
 

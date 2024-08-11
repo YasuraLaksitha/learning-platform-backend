@@ -32,7 +32,7 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public Instructor create(Instructor instructor) {
         personValidator.isValidPerson(instructor,true);
-        if (Boolean.TRUE.equals(repository.findByEmail(instructor.getEmail())))
+        if (Boolean.TRUE.equals(repository.existsByEmail(instructor.getEmail())))
             throw new EntityExistsException("Instructor already exists");
         final InstructorEntity instructorEntity = repository.save(mapper.convertValue(instructor, InstructorEntity.class));
         return mapper.convertValue(instructorEntity, Instructor.class);
